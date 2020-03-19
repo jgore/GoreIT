@@ -1,0 +1,20 @@
+mongodb:
+max:
+  pool:
+    size: 300
+
+spring:
+  servlet:
+  multipart:
+    max-file-size: 3MB
+  application:
+  name: GoreIT
+  retry:
+    attempts: 10
+    delay: 10000
+  data:
+    mongodb:
+      database:  goreit
+      authentication-database: admin
+      host: mongodb
+      port: 27017

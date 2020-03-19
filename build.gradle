@@ -1,0 +1,65 @@
+buildscript {
+    ext {
+        js2pVersion = '1.0.2'
+        springfoxVersion = '2.8.0'
+    }
+    repositories {
+        jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath("org.jsonschema2pojo:jsonschema2pojo-gradle-plugin:${js2pVersion}")
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version '2.2.5.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'java'
+}
+apply plugin: 'jsonschema2pojo'
+
+group = 'pl.goreit'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation(
+            'org.springframework.boot:spring-boot-starter-data-mongodb',
+            'org.springframework.boot:spring-boot-starter-web',
+            "io.springfox:springfox-swagger2:${springfoxVersion}",
+            "io.springfox:springfox-swagger-ui:${springfoxVersion}",
+    )
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jsonSchema2Pojo {
+    targetPackage = 'pl.goreit.api.generated'
+    source = files('src/main/resources/json/')
+    includeHashcodeAndEquals = true
+    includeToString = true
+    includeConstructors = true
+    includeSetters = false
+    initializeCollections = true
+    targetVersion = 1.8
+    inclusionLevel = 'NON_EMPTY'
+    dateTimeType = "java.time.LocalDateTime"
+    dateType = "java.time.LocalDate"
+    timeType = "java.time.LocalTime"
+    removeOldOutput = true
+    useBigDecimals = true
+    generateBuilders = true
+}

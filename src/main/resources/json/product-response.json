@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "text": {
+      "type": "string"
+    },
+    "price": {
+      "type": "string"
+    },
+    "comments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/commentView"
+      }
+    }
+  },
+  "definitions": {
+    "commentView": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

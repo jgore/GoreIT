@@ -1,0 +1,37 @@
+version: '3.6'
+services:
+
+#  goreit-service:
+#    image: localhost:5000/goreit
+#    volumes:
+#      - goreit-service-data:/root
+#    ports:
+#      - 8080:8080
+#    depends_on:
+#      - 'mongodb'
+#    networks:
+#      - GoreIT-internal
+#    environment:
+#      SPRING_PROFILES_ACTIVE: "local"
+
+  mongodb:
+    image: mongo:4.0.0
+    volumes:
+      -  goreit-mongodb-data:/data/db
+    ports:
+      - 27017:27017
+    command: mongod
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+
+networks:
+  goreit-internal:
+
+
+volumes:
+  goreit-service-data:
+  goreit-mongodb-data:
+
+
+
