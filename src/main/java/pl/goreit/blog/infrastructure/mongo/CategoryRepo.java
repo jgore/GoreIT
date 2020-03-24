@@ -1,4 +1,4 @@
-package pl.goreit.blog.instrastructure.mongo;
+package pl.goreit.blog.infrastructure.mongo;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;

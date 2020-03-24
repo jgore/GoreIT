@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "products": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/importedProduct"
+      }
+    }
+  },
+  "definitions": {
+    "importedProduct": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "price": {
+          "type": "number"
+        }
+      }
+    }
+  }
+}

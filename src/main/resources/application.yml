@@ -18,3 +18,13 @@ spring:
       authentication-database: admin
       host: mongodb
       port: 27017
+
+loggin:
+  level:
+    root: info
+    org:
+      springframework:
+        web: info
+      hibernate:
+        SQL: INFO
+  file: /logs/goreit.log

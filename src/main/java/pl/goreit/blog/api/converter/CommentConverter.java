@@ -7,6 +7,7 @@ import pl.goreit.blog.domain.model.Comment;
 
 @Component
 public class CommentConverter implements Converter<Comment, CommentView> {
+
     @Override
     public CommentView convert(Comment comment) {
         return new CommentView(comment.getUserId(), comment.getText());

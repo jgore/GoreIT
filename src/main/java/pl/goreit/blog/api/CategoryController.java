@@ -21,6 +21,6 @@ public class CategoryController {
     @GetMapping
     @ApiOperation(value = "pobiera drzewo categori", notes = "pobiera drzewo categori")
     public CategoryResponse getCategoriesTree(@RequestParam CategoryName categoryName) throws DomainException {
-        return categoryService.findByName();
+        return categoryService.findByName(categoryName.name());
     }
 }

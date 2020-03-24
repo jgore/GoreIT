@@ -3,19 +3,19 @@ package pl.goreit.blog.api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import pl.goreit.api.generated.CreateOrderRequest;
+import pl.goreit.api.generated.OrderLineRequest;
+import pl.goreit.api.generated.OrderResponse;
 import pl.goreit.blog.domain.CategoryName;
-import pl.goreit.blog.domain.DomainException;
-import pl.goreit.blog.domain.ExceptionCode;
 import pl.goreit.blog.domain.model.Category;
 import pl.goreit.blog.domain.model.Product;
-import pl.goreit.blog.instrastructure.mongo.CategoryRepo;
-import pl.goreit.blog.instrastructure.mongo.ProductRepo;
+import pl.goreit.blog.domain.service.OrderService;
+import pl.goreit.blog.infrastructure.mongo.CategoryRepo;
+import pl.goreit.blog.infrastructure.mongo.ProductRepo;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,6 +33,27 @@ public class TestHelperController {
 
     @Autowired
     private CategoryRepo categoryRepo;
+
+    @Autowired
+    private OrderService orderService;
+
+    @PostMapping("addOrder")
+    @ApiOperation(value = "add order")
+    public OrderResponse addOrder(@RequestParam("userId") String userId,
+                         @RequestParam("orderProductNumber") Integer orderProductNumber,
+                         @RequestParam("amount") Integer amount) {
+
+        List<Product> all = productRepo.findAll();
+        List<OrderLineRequest> orderLineRequests = new ArrayList<>();
+
+        for (int i = 0; i < orderProductNumber; i++) {
+            Product product = all.get(i);
+            OrderLineRequest orderProductView = new OrderLineRequest(product.getTitle(), amount);
+            orderLineRequests.add(orderProductView);
+        }
+
+        return orderService.create(userId, new CreateOrderRequest(orderLineRequests));
+    }
 
 
     @GetMapping("/addProduct/")

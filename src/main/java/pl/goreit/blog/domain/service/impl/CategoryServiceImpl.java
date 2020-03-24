@@ -7,7 +7,7 @@ import pl.goreit.blog.domain.DomainException;
 import pl.goreit.blog.domain.ExceptionCode;
 import pl.goreit.blog.domain.model.Category;
 import pl.goreit.blog.domain.service.CategoryService;
-import pl.goreit.blog.instrastructure.mongo.CategoryRepo;
+import pl.goreit.blog.infrastructure.mongo.CategoryRepo;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,7 +27,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryResponse findByName(String name) throws DomainException {
         Category category = categoryRepo.findByName(name)
-                .orElseThrow(() -> new DomainException(ExceptionCode.FOR_SELL_02));
+                .orElseThrow(() -> new DomainException(ExceptionCode.GOREIT_02));
 
         return sellConversionService.convert(category, CategoryResponse.class);
 
