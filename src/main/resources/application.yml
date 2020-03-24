@@ -8,17 +8,25 @@ spring:
   multipart:
     max-file-size: 3MB
   application:
-  name: GoreIT
-  retry:
-    attempts: 10
-    delay: 10000
+    name: GoreIT
   data:
     mongodb:
       database:  goreit
       authentication-database: admin
       host: mongodb
       port: 27017
-
+  datasource:
+    hikari:
+      register-mbeans: true
+    password: Lideo123^
+    url: jdbc:postgresql://localhost:20002/pharmacy-system
+    username: postgres
+  liquibase:
+    change-log: "classpath:db/liquibase-master-changelog.xml"
+  jpa:
+    properties:
+      hibernate:
+        default_schema: goreit
 loggin:
   level:
     root: info

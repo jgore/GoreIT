@@ -1,5 +1,6 @@
 package pl.goreit.blog;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ConversionServiceFactoryBean;
@@ -16,6 +17,11 @@ public class GoreITConfiguration {
     public ConversionService goreITConversionService(ConversionServiceFactoryBean conversionServiceFactoryBean, Set<Converter<?, ?>> converters) {
         conversionServiceFactoryBean.setConverters(converters);
         return conversionServiceFactoryBean.getObject();
+    }
+
+    @Bean
+    public ObjectMapper objectMapper(){
+        return new ObjectMapper();
     }
 
     @Bean
