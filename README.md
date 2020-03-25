@@ -2,6 +2,7 @@
 
 GoreIT_SHOP
 
-[ Docker,Java, Angular 8, Node.JS] \
+[ Docker, Microservice architecture, Java, Angular 8, Node.JS] \
 spring boot, spring-data, hibernate \
-postgresSQL, mongodb, liquibase 
+postgresSQL, mongodb, liquibase \
+gradle
