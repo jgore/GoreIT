@@ -1,6 +1,4 @@
-# GoreIT
-
-GoreIT_SHOP
+# GoreIT_SHOP
 
 Cel Projektu 
 
