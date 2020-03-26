@@ -4,7 +4,7 @@ GoreIT_SHOP
 
 Cel Projektu 
 
-1)Umożliwienie sprzedaży KUP TERAZ i LICYTYACJI przedmiotów użytkowników.
+1) Umożliwienie sprzedaży KUP TERAZ i LICYTYACJI przedmiotów użytkowników.
 2) Wydruk faktury
 3) Historia zamówień
 4) Wsparcie
