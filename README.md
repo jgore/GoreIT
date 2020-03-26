@@ -23,4 +23,6 @@ Kazdy product ma swoja kategorie w ktorej jest wyswietlony.
 
 Dodatkowo mozna stworzyc zamowienie na produkty ( order -> orderLines )
 
+Przeglądać historie zamówień
+
 cdn ...
