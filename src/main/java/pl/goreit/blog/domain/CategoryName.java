@@ -1,18 +1,9 @@
 package pl.goreit.blog.domain;
 
 public enum CategoryName {
-    January("Styczeń"),
-    February("Luty"),
-    March("Marzec"),
-    April("Kwiecień"),
-    May("Maj"),
-    June("Czerwiec"),
-    July("Lipiec"),
-    August("Sierpień"),
-    September("Wrzesień"),
-    October("Październik"),
-    November("Listopad"),
-    December("Grudzień");
+    MOTO("Motoryzacja"),
+    ELECTRO("Elektronika"),
+    IT("IT");
 
     private String value;
 

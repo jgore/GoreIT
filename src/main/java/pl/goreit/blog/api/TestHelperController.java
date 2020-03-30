@@ -18,6 +18,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/test")
@@ -43,11 +44,11 @@ public class TestHelperController {
                          @RequestParam("orderProductNumber") Integer orderProductNumber,
                          @RequestParam("amount") Integer amount) {
 
-        List<Product> all = productRepo.findAll();
+        Product korepetycje0 = productRepo.findByTitle("korepetycje").get();
         List<OrderLineRequest> orderLineRequests = new ArrayList<>();
 
         for (int i = 0; i < orderProductNumber; i++) {
-            Product product = all.get(i);
+            Product product = korepetycje0;
             OrderLineRequest orderProductView = new OrderLineRequest(product.getTitle(), amount);
             orderLineRequests.add(orderProductView);
         }
@@ -61,7 +62,7 @@ public class TestHelperController {
     public void addProducts(@RequestParam("amount") Integer amount) {
 
         for (int count = 0; count < amount; count++) {
-            Product product = new Product("product " + count, "Example text", BigDecimal.valueOf(count + 100));
+            Product product = new Product("korepetycje" , "Pomoc w programowaniu", BigDecimal.valueOf(150));
             productRepo.save(product);
         }
 

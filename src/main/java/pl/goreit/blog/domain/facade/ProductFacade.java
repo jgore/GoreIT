@@ -7,6 +7,8 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import pl.goreit.api.generated.product_api.ImportedProduct;
+import pl.goreit.blog.domain.DomainException;
+import pl.goreit.blog.domain.ExceptionCode;
 import pl.goreit.blog.domain.model.Product;
 import pl.goreit.blog.domain.model.postgres.BatchProductImport;
 import pl.goreit.blog.domain.provider.ProductProvider;
@@ -15,6 +17,8 @@ import pl.goreit.blog.infrastructure.postgres.BatchProductImportRepo;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
 
 @Component
@@ -35,12 +39,21 @@ public class ProductFacade {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @Scheduled(fixedRate = 10000)
-    public void importProducts() throws JsonProcessingException {
+    @Scheduled(fixedRate = 7000)
+    public void importProducts() throws JsonProcessingException, InterruptedException, DomainException {
+
+        ReentrantLock lock = new ReentrantLock();
+
+        boolean isLockAcquired = lock.tryLock(1, TimeUnit.SECONDS);
+
+        if (!isLockAcquired) {
+            throw new DomainException(ExceptionCode.GOREIT_05);
+        }
+
         List<ImportedProduct> importedProducts = productProvider.provideProducts();
 
         String productsJson = objectMapper.writeValueAsString(importedProducts);
-        batchProductImportRepo.save( new BatchProductImport(productsJson, LocalDateTime.now()));
+        batchProductImportRepo.save(new BatchProductImport(productsJson, LocalDateTime.now()));
 
         List<Product> products = importedProducts.stream()
                 .map(importedProduct -> goreITConversionService.convert(importedProduct, Product.class))
@@ -48,5 +61,8 @@ public class ProductFacade {
 
         productRepo.saveAll(products);
 
+        lock.unlock();
+
     }
+
 }

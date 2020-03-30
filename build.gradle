@@ -70,7 +70,7 @@ test {
 def cPath = "$rootDir" + "/src/main/resources"
 def changeLog = 'db/liquibase-master-changelog.xml'
 def dbDriver = 'jdbc:postgresql'
-def dbName = 'pharmacy-system'
+def dbName = 'goreit'
 
 liquibase {
     activities {

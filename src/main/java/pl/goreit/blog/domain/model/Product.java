@@ -2,6 +2,7 @@ package pl.goreit.blog.domain.model;
 
 import com.google.common.collect.Lists;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import pl.goreit.blog.domain.DomainException;
 import pl.goreit.blog.domain.ExceptionCode;
@@ -16,6 +17,7 @@ public class Product {
 
     @Id
     private String id;
+    @Indexed(unique = true)
     private String title;
     private String text;
     private BigDecimal price;

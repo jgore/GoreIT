@@ -3,8 +3,8 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
     <changeSet id="20200324.0-init_schema" author="pszczepkowski">
         <sql dbms="postgresql">
-            create schema goreit;
-            CREATE TABLE goreit.batch_product_import
+            create schema IF NOT EXISTS goreit;
+            CREATE TABLE IF NOT EXISTS goreit.batch_product_import
             (
             id SERIAL PRIMARY KEY,
             products_json text,

@@ -25,13 +25,23 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
 
-networks:
-  goreit-internal:
+  pstgrsql:
+    image: postgres
+    command: postgres -c 'max_connections=1000' -c 'shared_buffers=2GB' -c 'idle_in_transaction_session_timeout=5min'
+    volumes:
+      - goreit-postgres-data:/var/lib/postgresql/data
+    ports:
+      - 20002:5432
+    environment:
+      - POSTGRES_PASSWORD=Lideo123^
+      - POSTGRES_DB=goreit
+      - PGDATA=postgres
 
 
 volumes:
   goreit-service-data:
   goreit-mongodb-data:
+  goreit-postgres-data:
 
 
 

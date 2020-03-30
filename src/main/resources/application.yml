@@ -19,7 +19,7 @@ spring:
     hikari:
       register-mbeans: true
     password: Lideo123^
-    url: jdbc:postgresql://localhost:20002/pharmacy-system
+    url: jdbc:postgresql://localhost:20002/goreit
     username: postgres
   liquibase:
     change-log: "classpath:db/liquibase-master-changelog.xml"
