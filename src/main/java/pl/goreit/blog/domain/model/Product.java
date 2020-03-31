@@ -21,15 +21,17 @@ public class Product {
     private String title;
     private String text;
     private BigDecimal price;
+    private Integer quantity;
     private List<Comment> comments;
     private Status status;
 
     private LocalDateTime creationDate;
 
-    public Product( String title, String text, BigDecimal price) {
+    public Product( String title, String text, BigDecimal price, Integer quantity) {
         this.title = title;
         this.text = text;
         this.price = price;
+        this.quantity = quantity;
         this.status = Status.AVAILABLE;
         this.creationDate = LocalDateTime.now();
         this.comments = Lists.newArrayList();
@@ -58,6 +60,10 @@ public class Product {
         return text;
     }
 
+    public Integer getQuantity() {
+        return quantity;
+    }
+
     public Status getStatus() {
         return status;
     }
@@ -70,31 +76,6 @@ public class Product {
         return Lists.newArrayList(comments);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Product product = (Product) o;
-        return Objects.equals(id, product.id) &&
-                Objects.equals(getPrice(), product.getPrice()) &&
-                status == product.status &&
-                Objects.equals(creationDate, product.creationDate);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, getPrice(), status, creationDate);
-    }
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id='" + id + '\'' +
-                ", price=" + price +
-                ", status=" + status +
-                ", creationDate=" + creationDate +
-                '}';
-    }
 
     public enum Status {
         AVAILABLE, SOLD, ARCHIVED

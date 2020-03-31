@@ -25,10 +25,6 @@ import java.util.Optional;
 @Profile("!prod")
 public class TestHelperController {
 
-    public static String TEST_PRODUCT = "TEST_PRODUCT";
-    public static BigDecimal TEST_PRODUCT_PRICE = BigDecimal.valueOf(100);
-    public static final String TEST_SUB_CATEGORY_NAME = "TEST_SUB_CATEGORY_NAME";
-
     @Autowired
     private ProductRepo productRepo;
 
@@ -62,7 +58,7 @@ public class TestHelperController {
     public void addProducts(@RequestParam("amount") Integer amount) {
 
         for (int count = 0; count < amount; count++) {
-            Product product = new Product("korepetycje" , "Pomoc w programowaniu", BigDecimal.valueOf(150));
+            Product product = new Product("korepetycje" , "Pomoc w programowaniu", BigDecimal.valueOf(150), 10);
             productRepo.save(product);
         }
 

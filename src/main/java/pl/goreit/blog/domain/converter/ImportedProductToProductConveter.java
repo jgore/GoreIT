@@ -10,6 +10,6 @@ public class ImportedProductToProductConveter implements Converter<ImportedProdu
 
     @Override
     public Product convert(ImportedProduct importedProduct) {
-        return new Product(importedProduct.getTitle(), importedProduct.getText(), importedProduct.getPrice());
+        return new Product(importedProduct.getTitle(), importedProduct.getText(), importedProduct.getPrice(), importedProduct.getQuantity());
     }
 }
