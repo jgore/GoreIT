@@ -6,4 +6,4 @@ spring:
       host: mongodb
       port: 27017
   datasource:
-    url: jdbc:postgresql://postgtres:5432/goreit
+    url: jdbc:postgresql://postgres:5432/goreit
