@@ -5,6 +5,8 @@ spring:
     mongodb:
       database:  goreit
       authentication-database: admin
-      host: localhost:27017
+      host: localhost:5432
       password: root
       username: root
+  datasource:
+    url: jdbc:postgresql://localhost:5432/goreit

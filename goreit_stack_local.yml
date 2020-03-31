@@ -9,8 +9,6 @@ services:
       - 8080:8080
     depends_on:
       - 'mongodb'
-    networks:
-      - GoreIT-internal
     environment:
       SPRING_PROFILES_ACTIVE: "dev"
 
@@ -31,7 +29,7 @@ services:
     volumes:
       - goreit-postgres-data:/var/lib/postgresql/data
     ports:
-      - 20002:5432
+      - 5432:5432
     environment:
       - POSTGRES_PASSWORD=Lideo123^
       - POSTGRES_DB=goreit
