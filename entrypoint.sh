@@ -4,4 +4,4 @@ export SERVER_HOSTNAME=$HOSTNAME
 if [ ! -z "$CREDENTIALS_FILE_NAME" ] && [ -r "/run/secrets/$CREDENTIALS_FILE_NAME" ]; then
 	. /run/secrets/$CREDENTIALS_FILE_NAME
 fi
-java -Djava.security.egd=file:/dev/./urandom $JAVA_OPTS -jar /app.jar
+java -Djava.security.egd=file:/dev/./urandom $JAVA_OPTS -jar /GoreIT-0.0.1.jar.jar
