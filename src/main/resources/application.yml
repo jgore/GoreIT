@@ -38,3 +38,6 @@ loggin:
       hibernate:
         SQL: INFO
   file: /logs/goreit.log
+
+server:
+  port: 8080
