@@ -2,7 +2,7 @@ version: '3.6'
 services:
 
   goreit-service:
-    image: localhost:5000/goreit
+    image: goreit/goreit
     volumes:
       - goreit-service-data:/root
     ports:
