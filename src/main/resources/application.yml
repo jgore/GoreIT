@@ -1,7 +1,7 @@
 mongodb:
-max:
-  pool:
-    size: 300
+  max:
+    pool:
+      size: 300
 
 spring:
   servlet:

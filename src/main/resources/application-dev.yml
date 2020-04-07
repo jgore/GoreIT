@@ -1,9 +1,2 @@
-spring:
-  data:
-    mongodb:
-      database:  goreit
-      authentication-database: admin
-      host: mongodb
-      port: 27017
-  datasource:
-    url: jdbc:postgresql://postgres:5432/goreit
+server:
+  port: 8080

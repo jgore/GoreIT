@@ -3,6 +3,7 @@ services:
 
   goreit-service:
     image: goreit/goreit
+#    image: localhost:5000/goreit
     volumes:
       - goreit-service-data:/root
     ports:
@@ -12,6 +13,8 @@ services:
       - 'postgres'
     environment:
       SPRING_PROFILES_ACTIVE: "dev"
+    networks:
+      - goreit
 
   mongodb:
     image: mongo:4.0.0
@@ -23,6 +26,8 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
+    networks:
+      - goreit
 
   postgres:
     image: postgres
@@ -34,6 +39,8 @@ services:
       - POSTGRES_PASSWORD=Lideo123^
       - POSTGRES_DB=goreit
       - PGDATA=postgres
+    networks:
+      - goreit
 
 
 volumes:
@@ -41,5 +48,6 @@ volumes:
   goreit-mongodb-data:
   goreit-postgres-data:
 
-
+networks:
+  goreit:
 
