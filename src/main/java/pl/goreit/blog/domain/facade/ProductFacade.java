@@ -39,7 +39,7 @@ public class ProductFacade {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @Scheduled(fixedRate = 7000)
+    //@Scheduled(fixedRate = 7000)
     public void importProducts() throws JsonProcessingException, InterruptedException, DomainException {
 
         ReentrantLock lock = new ReentrantLock();
@@ -59,7 +59,7 @@ public class ProductFacade {
                 .map(importedProduct -> goreITConversionService.convert(importedProduct, Product.class))
                 .collect(Collectors.toList());
 
-        productRepo.saveAll(products);
+      //  productRepo.saveAll(products);
 
         lock.unlock();
 

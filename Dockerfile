@@ -6,7 +6,4 @@ ENV TZ=Europe/Warsaw
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 COPY ${JAR_FILE} /
 COPY ./entrypoint.sh entrypoint.sh
-#COPY ./jmxremote.password /opt/tomcat/bin/jmxremote.password
-#COPY ./jmxremote.access /opt/tomcat/bin/jmxremote.access
-HEALTHCHECK --start-period=3m CMD curl --fail http://localhost:8080/actuator/health
 ENTRYPOINT ["/entrypoint.sh"]
