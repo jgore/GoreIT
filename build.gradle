@@ -34,10 +34,12 @@ repositories {
 
 dependencies {
     implementation(
+            'org.springframework.cloud:spring-cloud-starter-kubernetes-all:1.1.2.RELEASE',
             'org.springframework.boot:spring-boot-starter-data-mongodb',
             'org.springframework.boot:spring-boot-starter-web',
             'org.springframework.boot:spring-boot-starter-aop',
             'org.springframework.boot:spring-boot-starter-data-jpa',
+            'org.springframework.boot:spring-boot-starter-actuator',
             "io.springfox:springfox-swagger2:${springfoxVersion}",
             "io.springfox:springfox-swagger-ui:${springfoxVersion}",
             'org.liquibase:liquibase-core:3.6.3',

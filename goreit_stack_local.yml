@@ -1,25 +1,25 @@
 version: '3.6'
 services:
 
-  goreit-service:
-    image: goreit/goreit
+#  goreit-service:
+##    image: goreit/goreit
 #    image: localhost:5000/goreit
-    volumes:
-      - goreit-service-data:/root
-    ports:
-      - 8080:8080
-    depends_on:
-      - 'mongodb'
-      - 'postgres'
-    environment:
-      SPRING_PROFILES_ACTIVE: "dev"
-    networks:
-      - goreit
+#    volumes:
+#      - goreit-service-data:/root
+#    ports:
+#      - 8080:8080
+#    depends_on:
+#      - 'mongodb'
+#      - 'postgres'
+#    environment:
+#      SPRING_PROFILES_ACTIVE: "dev"
+#    networks:
+#      - goreit
 
-  mongodb:
+  mongo:
     image: mongo:4.0.0
     volumes:
-      -  goreit-mongodb-data:/data/db
+      -  goreit-mongo-data:/data/db
     ports:
       - 27017:27017
     command: mongod
@@ -45,7 +45,7 @@ services:
 
 volumes:
   goreit-service-data:
-  goreit-mongodb-data:
+  goreit-mongo-data:
   goreit-postgres-data:
 
 networks:

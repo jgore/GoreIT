@@ -8,12 +8,12 @@ spring:
   multipart:
     max-file-size: 3MB
   application:
-    name: GoreIT
+    name: Goreit
   data:
     mongodb:
       database:  goreit
       authentication-database: admin
-      host: mongodb
+      host: mongo.dev
       port: 27017
       password: root
       username: root
@@ -21,7 +21,7 @@ spring:
     hikari:
       register-mbeans: true
     password: Lideo123^
-    url: jdbc:postgresql://postgres:5432/goreit
+    url: jdbc:postgresql://postgres.dev:5432/goreit
     username: postgres
   liquibase:
     change-log: "classpath:db/liquibase-master-changelog.xml"
@@ -29,15 +29,20 @@ spring:
     properties:
       hibernate:
         default_schema: goreit
-loggin:
+logging:
   level:
-    root: info
+    root: warn
     org:
       springframework:
-        web: info
+        web: debug
       hibernate:
-        SQL: INFO
+        SQL: info
   file: /logs/goreit.log
 
 server:
   port: 8080
+
+ribbon:
+  http:
+    client:
+      enabled=true:
