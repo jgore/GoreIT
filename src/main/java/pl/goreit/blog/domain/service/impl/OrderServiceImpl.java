@@ -45,12 +45,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderResponse create(String userId, CreateOrderRequest orderRequest) {
+    public OrderResponse create(CreateOrderRequest orderRequest) throws DomainException {
         ObjectId orderId = ObjectId.get();
 
-        List<OrderLineRequest> orderLineViews = orderRequest.getOrderLines();
+        List<OrderLineRequest> orderLineRequests = orderRequest.getOrderlines();
 
-        List<OrderLine> orderLines = orderLineViews.stream()
+        if( orderLineRequests == null || orderLineRequests.isEmpty() ){
+            throw new DomainException(ExceptionCode.GOREIT_06);
+        }
+
+        List<OrderLine> orderlines = orderLineRequests.stream()
                 .map(orderLineView -> {
 
                     //@FIXME get all upper
@@ -59,7 +63,7 @@ public class OrderServiceImpl implements OrderService {
                 })
                 .collect(Collectors.toList());
 
-        Order order = new Order(orderId.toString(), userId, orderLines, LocalDateTime.now());
+        Order order = new Order(orderId.toString(), orderRequest.getUserId(), orderlines, LocalDateTime.now());
 
         return orderConverter.convert(orderRepo.save(order));
     }

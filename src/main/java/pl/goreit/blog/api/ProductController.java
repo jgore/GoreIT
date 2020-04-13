@@ -10,7 +10,8 @@ import pl.goreit.blog.domain.service.ProductService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/products")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ProductController {
 
     @Autowired
@@ -20,6 +21,12 @@ public class ProductController {
     @ApiOperation(value = "pobiera wszystkie produkty", notes = "pobiera wszystkie produkty ")
     public List<ProductResponse> getProducts() {
         return productService.getAll();
+    }
+
+    @GetMapping("/{title}")
+    @ApiOperation(value = "pobiera jeden produkt", notes = "pobiera 1 produkt")
+    public ProductResponse getProduct(@PathVariable String title) throws DomainException {
+        return productService.findByTitle(title);
     }
 
     @PostMapping("/comment")

@@ -8,6 +8,7 @@ import pl.goreit.api.generated.CreateOrderRequest;
 import pl.goreit.api.generated.OrderLineRequest;
 import pl.goreit.api.generated.OrderResponse;
 import pl.goreit.blog.domain.CategoryName;
+import pl.goreit.blog.domain.DomainException;
 import pl.goreit.blog.domain.model.Category;
 import pl.goreit.blog.domain.model.Product;
 import pl.goreit.blog.domain.service.OrderService;
@@ -18,7 +19,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/test")
@@ -37,19 +37,18 @@ public class TestHelperController {
     @PostMapping("addOrder")
     @ApiOperation(value = "add order")
     public OrderResponse addOrder(@RequestParam("userId") String userId,
-                         @RequestParam("orderProductNumber") Integer orderProductNumber,
-                         @RequestParam("amount") Integer amount) {
+                                  @RequestParam("orderProductNumber") Integer orderProductNumber,
+                                  @RequestParam("amount") Integer amount) throws DomainException {
 
         Product korepetycje0 = productRepo.findByTitle("korepetycje").get();
         List<OrderLineRequest> orderLineRequests = new ArrayList<>();
 
         for (int i = 0; i < orderProductNumber; i++) {
-            Product product = korepetycje0;
-            OrderLineRequest orderProductView = new OrderLineRequest(product.getTitle(), amount);
+            OrderLineRequest orderProductView = new OrderLineRequest(korepetycje0.getTitle(), amount);
             orderLineRequests.add(orderProductView);
         }
 
-        return orderService.create(userId, new CreateOrderRequest(orderLineRequests));
+        return orderService.create(new CreateOrderRequest(userId, orderLineRequests));
     }
 
 
@@ -58,7 +57,7 @@ public class TestHelperController {
     public void addProducts(@RequestParam("amount") Integer amount) {
 
         for (int count = 0; count < amount; count++) {
-            Product product = new Product("korepetycje" , "Pomoc w programowaniu", BigDecimal.valueOf(150), 10);
+            Product product = new Product("korepetycje", "Pomoc w programowaniu", BigDecimal.valueOf(150), 10);
             productRepo.save(product);
         }
 

@@ -31,17 +31,22 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public ProductResponse findByTitle(String title) throws DomainException {
+        Product product = productRepo.findByTitle(title).orElseThrow(() -> new DomainException(ExceptionCode.GOREIT_01));
+        return sellConversionService.convert(product, ProductResponse.class);
+    }
+
+    @Override
     public ProductResponse addComment(String userId, String productTitle, String text) throws DomainException {
         Product product = productRepo.findByTitle(productTitle).orElseThrow(() -> new DomainException(ExceptionCode.GOREIT_01));
 
         Integer sequenceNo = 0;
-        if( product.getComments().size() > 0)
-        {
+        if (product.getComments().size() > 0) {
             sequenceNo = product.getComments().get(product.getComments().size() - 1).getSequenceNo();
         }
 
-        product.addComment(new Comment(sequenceNo+1, userId, text));
+        product.addComment(new Comment(sequenceNo + 1, userId, text));
         Product saved = productRepo.save(product);
-        return sellConversionService.convert( saved, ProductResponse.class );
+        return sellConversionService.convert(saved, ProductResponse.class);
     }
 }

@@ -8,5 +8,7 @@ import java.util.List;
 public interface ProductService {
     List<ProductResponse> getAll();
 
+    ProductResponse findByTitle(String id) throws DomainException;
+
     ProductResponse addComment(String userId, String productTitle, String text) throws DomainException;
 }

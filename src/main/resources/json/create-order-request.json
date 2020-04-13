@@ -1,7 +1,10 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "properties": {
-    "orderLines": {
+    "userId": {
+      "type": "string"
+    },
+    "orderlines": {
       "type": "array",
       "items": {
         "$ref": "#/definitions/orderLineRequest"

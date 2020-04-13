@@ -9,5 +9,5 @@ public interface OrderService {
     OrderResponse findById(String id) throws DomainException;
     OrderResponse findByUserId(String userId) throws DomainException;
 
-    OrderResponse create(String userId, CreateOrderRequest orderRequest);
+    OrderResponse create(CreateOrderRequest orderRequest) throws DomainException;
 }

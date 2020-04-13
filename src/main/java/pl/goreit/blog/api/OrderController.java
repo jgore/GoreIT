@@ -2,15 +2,19 @@ package pl.goreit.blog.api;
 
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import pl.goreit.api.generated.CreateOrderRequest;
 import pl.goreit.api.generated.OrderResponse;
 import pl.goreit.blog.domain.DomainException;
 import pl.goreit.blog.domain.service.OrderService;
 
+import java.util.Map;
+
 
 @RestController
-@RequestMapping("order")
+@RequestMapping("orders")
+@CrossOrigin(origins = "http://localhost:4200")
 public class OrderController {
 
     @Autowired
@@ -22,9 +26,9 @@ public class OrderController {
         return orderService.findById(id);
     }
 
-    @PostMapping("/add")
+    @PostMapping(value = "/add", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE})
     @ApiOperation(value = "add new order")
-    public OrderResponse addOrder(@RequestParam("userId") String userId, @RequestBody CreateOrderRequest orderRequest) {
-        return orderService.create(userId, orderRequest);
+    public OrderResponse addOrder(@RequestBody CreateOrderRequest orderRequest) throws DomainException {
+        return orderService.create(orderRequest);
     }
 }
