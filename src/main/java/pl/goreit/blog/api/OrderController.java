@@ -9,7 +9,7 @@ import pl.goreit.api.generated.OrderResponse;
 import pl.goreit.blog.domain.DomainException;
 import pl.goreit.blog.domain.service.OrderService;
 
-import java.util.Map;
+import java.util.List;
 
 
 @RestController
@@ -25,6 +25,13 @@ public class OrderController {
     public OrderResponse getOrder(@PathVariable("id") String id) throws DomainException {
         return orderService.findById(id);
     }
+
+    @GetMapping("/byUser/{id}")
+    @ApiOperation(value = "get by  user id")
+    public List<OrderResponse> getOrders(@PathVariable("id") String id) throws DomainException {
+        return orderService.findByUserId(id);
+    }
+
 
     @PostMapping(value = "/add", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE})
     @ApiOperation(value = "add new order")

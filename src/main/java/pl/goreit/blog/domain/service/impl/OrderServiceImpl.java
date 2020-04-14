@@ -2,6 +2,7 @@ package pl.goreit.blog.domain.service.impl;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Component;
 import pl.goreit.api.generated.CreateOrderRequest;
 import pl.goreit.api.generated.OrderLineRequest;
@@ -24,7 +25,7 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl implements OrderService {
 
     @Autowired
-    private OrderConverter orderConverter;
+    private ConversionService sellConversionService;
 
     @Autowired
     private OrderRepo orderRepo;
@@ -35,13 +36,15 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderResponse findById(String id) throws DomainException {
         Order order = orderRepo.findById(id).orElseThrow(() -> new DomainException(ExceptionCode.GOREIT_04));
-        return orderConverter.convert(order);
+        return sellConversionService.convert(order, OrderResponse.class);
     }
 
     @Override
-    public OrderResponse findByUserId(String userId) throws DomainException {
-        Order order = orderRepo.findByUserId(userId).orElseThrow(() -> new DomainException(ExceptionCode.GOREIT_04));
-        return orderConverter.convert(order);
+    public List<OrderResponse> findByUserId(String userId) {
+        List<Order> ordersByUser = orderRepo.findByUserId(userId);
+        return ordersByUser.stream()
+                .map(order -> sellConversionService.convert(order, OrderResponse.class))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -50,7 +53,7 @@ public class OrderServiceImpl implements OrderService {
 
         List<OrderLineRequest> orderLineRequests = orderRequest.getOrderlines();
 
-        if( orderLineRequests == null || orderLineRequests.isEmpty() ){
+        if (orderLineRequests == null || orderLineRequests.isEmpty()) {
             throw new DomainException(ExceptionCode.GOREIT_06);
         }
 
@@ -65,6 +68,6 @@ public class OrderServiceImpl implements OrderService {
 
         Order order = new Order(orderId.toString(), orderRequest.getUserId(), orderlines, LocalDateTime.now());
 
-        return orderConverter.convert(orderRepo.save(order));
+        return sellConversionService.convert(orderRepo.save(order), OrderResponse.class);
     }
 }

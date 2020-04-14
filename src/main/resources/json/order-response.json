@@ -7,15 +7,15 @@
     "creationTime": {
       "type": "string"
     },
-    "orderLineViews": {
+    "orderlineViews": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/orderLineView"
+        "$ref": "#/definitions/orderlineView"
       }
     }
   },
   "definitions": {
-    "orderLineView": {
+    "orderlineView": {
       "type": "object",
       "properties": {
         "productTitle": {
