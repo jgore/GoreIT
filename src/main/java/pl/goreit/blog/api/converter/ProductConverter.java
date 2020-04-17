@@ -23,8 +23,10 @@ public class ProductConverter implements Converter<Product, ProductResponse> {
 
     @Override
     public ProductResponse convert(Product product) {
-        return new ProductResponse(product.getTitle(), product.getText(), product.getPrice().toString(), product.getComments().stream()
-                .map(comment -> conversionService.convert(comment, CommentView.class))
-                .collect(Collectors.toList()));
+        return new ProductResponse(product.getTitle(), product.getText(), product.getPrice().toString(),
+                product.getComments().stream()
+                        .map(comment -> conversionService.convert(comment, CommentView.class))
+                        .collect(Collectors.toList()),
+                product.getStatus().name());
     }
 }

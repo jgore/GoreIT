@@ -12,6 +12,9 @@
     "importedProduct": {
       "type": "object",
       "properties": {
+        "categoryName": {
+          "type": "string"
+        },
         "title": {
           "type": "string"
         },

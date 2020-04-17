@@ -57,7 +57,7 @@ public class TestHelperController {
     public void addProducts(@RequestParam("amount") Integer amount) {
 
         for (int count = 0; count < amount; count++) {
-            Product product = new Product("korepetycje", "Pomoc w programowaniu", BigDecimal.valueOf(150), 10);
+            Product product = new Product(CategoryName.IT, "korepetycje", "Pomoc w programowaniu", BigDecimal.valueOf(150), 10);
             productRepo.save(product);
         }
 

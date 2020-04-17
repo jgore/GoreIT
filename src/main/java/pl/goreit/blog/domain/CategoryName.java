@@ -2,7 +2,7 @@ package pl.goreit.blog.domain;
 
 public enum CategoryName {
     MOTO("Motoryzacja"),
-    ELECTRO("Elektronika"),
+    ELEKTRO("Elektronika"),
     IT("IT");
 
     private String value;

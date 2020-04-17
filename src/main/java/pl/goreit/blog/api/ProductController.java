@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.goreit.api.generated.ProductResponse;
+import pl.goreit.api.generated.product_api.CreateProductRequest;
 import pl.goreit.blog.domain.DomainException;
 import pl.goreit.blog.domain.service.ProductService;
 
@@ -29,11 +30,17 @@ public class ProductController {
         return productService.findByTitle(title);
     }
 
+    @PostMapping
+    @ApiOperation(value = "dodaje 1 produkt", notes = "dodaje produkt")
+    public ProductResponse addProduct(@RequestBody CreateProductRequest request) {
+        return productService.add(request);
+    }
+
     @PostMapping("/comment")
     @ApiOperation(value = "Dodaje komentarz do produktu", notes = "dodaje komentarz")
     public ProductResponse addComment(@RequestParam("userId") String userId,
-                              @RequestParam("title") String productTitle,
-                              @RequestParam("text") String text) throws DomainException {
+                                      @RequestParam("title") String productTitle,
+                                      @RequestParam("text") String text) throws DomainException {
         return productService.addComment(userId, productTitle, text);
     }
 

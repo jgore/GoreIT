@@ -11,7 +11,6 @@ import pl.goreit.blog.domain.service.OrderService;
 
 import java.util.List;
 
-
 @RestController
 @RequestMapping("orders")
 @CrossOrigin(origins = "http://localhost:4200")

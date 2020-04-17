@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import pl.goreit.api.generated.ProductResponse;
+import pl.goreit.api.generated.product_api.CreateProductRequest;
+import pl.goreit.blog.domain.CategoryName;
 import pl.goreit.blog.domain.DomainException;
 import pl.goreit.blog.domain.ExceptionCode;
 import pl.goreit.blog.domain.model.Comment;
@@ -33,6 +35,14 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductResponse findByTitle(String title) throws DomainException {
         Product product = productRepo.findByTitle(title).orElseThrow(() -> new DomainException(ExceptionCode.GOREIT_01));
+        return sellConversionService.convert(product, ProductResponse.class);
+    }
+
+    @Override
+    public ProductResponse add(CreateProductRequest createProductRequest) {
+        CreateProductRequest.CategoryName categoryName = createProductRequest.getCategoryName();
+        Product product = new Product(CategoryName.valueOf(categoryName.name()), createProductRequest.getTitle(),
+                createProductRequest.getText(), createProductRequest.getPrice(), createProductRequest.getQuantity());
         return sellConversionService.convert(product, ProductResponse.class);
     }
 

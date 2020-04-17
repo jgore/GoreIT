@@ -4,19 +4,20 @@ import com.google.common.collect.Lists;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import pl.goreit.blog.domain.CategoryName;
 import pl.goreit.blog.domain.DomainException;
 import pl.goreit.blog.domain.ExceptionCode;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 @Document
 public class Product {
 
     @Id
     private String id;
+    private CategoryName categoryName;
     @Indexed(unique = true)
     private String title;
     private String text;
@@ -27,7 +28,8 @@ public class Product {
 
     private LocalDateTime creationDate;
 
-    public Product( String title, String text, BigDecimal price, Integer quantity) {
+    public Product(CategoryName categoryName, String title, String text, BigDecimal price, Integer quantity) {
+        this.categoryName = categoryName;
         this.title = title;
         this.text = text;
         this.price = price;
@@ -42,6 +44,10 @@ public class Product {
             throw new DomainException(ExceptionCode.GOREIT_03);
         }
         return comments.add(comment);
+    }
+
+    public CategoryName getCategoryName() {
+        return categoryName;
     }
 
     public String getId() {
