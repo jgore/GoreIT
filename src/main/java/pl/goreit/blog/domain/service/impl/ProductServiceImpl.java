@@ -41,8 +41,9 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductResponse add(CreateProductRequest createProductRequest) {
         CreateProductRequest.CategoryName categoryName = createProductRequest.getCategoryName();
-        Product product = new Product(CategoryName.valueOf(categoryName.name()), createProductRequest.getTitle(),
+        Product product = new Product(CategoryName.valueOf(categoryName.value()), createProductRequest.getTitle(),
                 createProductRequest.getText(), createProductRequest.getPrice(), createProductRequest.getQuantity());
+        productRepo.save(product);
         return sellConversionService.convert(product, ProductResponse.class);
     }
 

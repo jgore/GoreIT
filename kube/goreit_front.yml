@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goreit-front-dep
+  labels:
+    app: goreit-front-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: goreit-front
+  template:
+    metadata:
+      labels:
+        app: goreit-front
+    spec:
+      containers:
+        - name: goreit-front
+          image: goreit/goreit-front:latest
+          imagePullPolicy: "Always"
+          ports:
+            - containerPort: 80
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: goreit-front-svc
+  labels:
+    app: goreit-front
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+  selector:
+    app: goreit-front
