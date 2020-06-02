@@ -17,18 +17,12 @@ spring:
       port: 27017
       password: root
       username: root
-  datasource:
-    hikari:
-      register-mbeans: true
-    password: Lideo123^
-    url: jdbc:postgresql://postgres:5432/goreit
-    username: postgres
-  liquibase:
-    change-log: "classpath:db/liquibase-master-changelog.xml"
-  jpa:
-    properties:
-      hibernate:
-        default_schema: goreit
+
+  cloud:
+    kubernetes:
+      discovery:
+        all-namespaces: true
+
 logging:
   level:
     root: warn
@@ -40,9 +34,10 @@ logging:
   file: /logs/goreit.log
 
 server:
-  port: 8080
+  port: 8082
 
 ribbon:
   http:
     client:
-      enabled=true:
+      enabled: true
+

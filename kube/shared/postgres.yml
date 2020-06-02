@@ -52,9 +52,9 @@ spec:
               mountPath: /data/db
           env:
             - name: POSTGRES_PASSWORD
-              value: Lideo123^
+              value: root
             - name: POSTGRES_DB
-              value: goreit
+              value: keycloak-db
             - name: PGDATA
               value: postgres
       volumes:

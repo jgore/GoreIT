@@ -1,37 +1,37 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: goreit-dep
+  name: proxy-dep
   labels:
-    app: goreit-service
+    app: proxy-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: goreit
+      app: proxy
   template:
     metadata:
       labels:
-        app: goreit
+        app: proxy
     spec:
       containers:
-        - name: goreit
-          image: goreit/goreit:latest
+        - name: proxy
+          image: goreit/proxy:latest
           ports:
-            - containerPort: 8082
+            - containerPort: 8080
 ---
 
 apiVersion: v1
 kind: Service
 metadata:
-  name: goreit-svc
+  name: proxy-svc
   labels:
-    app: goreit
+    app: proxy
 spec:
   type: LoadBalancer
   ports:
-    - port: 8082
-      targetPort: 8082
+    - port: 8080
+      targetPort: 8080
       protocol: TCP
   selector:
-    app: goreit
+    app: proxy

@@ -1,7 +1,10 @@
 package pl.goreit.blog.api;
 
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
+import io.swagger.annotations.AuthorizationScope;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import pl.goreit.api.generated.CreateOrderRequest;
@@ -9,6 +12,7 @@ import pl.goreit.api.generated.OrderResponse;
 import pl.goreit.blog.domain.DomainException;
 import pl.goreit.blog.domain.service.OrderService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -26,8 +30,9 @@ public class OrderController {
     }
 
     @GetMapping("/byUser/{id}")
-    @ApiOperation(value = "get by  user id")
-    public List<OrderResponse> getOrders(@PathVariable("id") String id) throws DomainException {
+    @ApiOperation(value="get by user id", authorizations=@Authorization(value="oauth2", scopes=@AuthorizationScope(description="write", scope="write")))
+    public List<OrderResponse> getOrders(HttpServletRequest httpRequest, @PathVariable("id") String id) throws DomainException {
+
         return orderService.findByUserId(id);
     }
 

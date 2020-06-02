@@ -11,8 +11,6 @@ buildscript {
     }
     dependencies {
         classpath("org.jsonschema2pojo:jsonschema2pojo-gradle-plugin:${js2pVersion}")
-        classpath 'org.liquibase:liquibase-core:3.6.3'
-        classpath "org.liquibase:liquibase-gradle-plugin:2.0.1"
     }
 }
 
@@ -20,7 +18,6 @@ plugins {
     id 'org.springframework.boot' version '2.2.5.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
     id 'java'
-    id "org.liquibase.gradle" version "2.0.1"
 }
 apply plugin: 'jsonschema2pojo'
 
@@ -38,12 +35,9 @@ dependencies {
             'org.springframework.boot:spring-boot-starter-data-mongodb',
             'org.springframework.boot:spring-boot-starter-web',
             'org.springframework.boot:spring-boot-starter-aop',
-            'org.springframework.boot:spring-boot-starter-data-jpa',
             'org.springframework.boot:spring-boot-starter-actuator',
             "io.springfox:springfox-swagger2:${springfoxVersion}",
             "io.springfox:springfox-swagger-ui:${springfoxVersion}",
-            'org.liquibase:liquibase-core:3.6.3',
-            'org.postgresql:postgresql',
             
     )
 
@@ -51,18 +45,8 @@ dependencies {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
 
-    testRuntimeOnly group: 'com.h2database', name: 'h2', version: '1.4.200'
-
     // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
     runtime group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
-
-    liquibaseRuntime(
-            'org.liquibase:liquibase-core:3.6.3',
-            'org.liquibase:liquibase-groovy-dsl:2.0.1',
-            'org.postgresql:postgresql',
-            'ch.qos.logback:logback-core:1.2.3',
-            'ch.qos.logback:logback-classic:1.2.3'
-    )
 
 }
 
@@ -70,23 +54,6 @@ test {
     useJUnitPlatform()
 }
 
-def cPath = "$rootDir" + "/src/main/resources"
-def changeLog = 'db/liquibase-master-changelog.xml'
-def dbDriver = 'jdbc:postgresql'
-def dbName = 'goreit'
-
-liquibase {
-    activities {
-        main {
-            changeLogFile changeLog
-            url "${dbDriver}://localhost:20002/${dbName}"
-            username 'postgres'
-            password 'Lideo123^'
-            classpath "${cPath}"
-        }
-    }
-    runList = project.hasProperty("runList") ? project.ext.runList : "main"
-}
 
 jsonSchema2Pojo {
     targetPackage = 'pl.goreit.api.generated'
