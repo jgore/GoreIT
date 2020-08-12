@@ -9,6 +9,9 @@ public class OrderLine {
     private Integer amount;
     private BigDecimal price;
 
+    public OrderLine() {
+    }
+
     public OrderLine(String orderId, String productTitle, Integer amount, BigDecimal price) {
         this.orderId = orderId;
         this.productTitle = productTitle;

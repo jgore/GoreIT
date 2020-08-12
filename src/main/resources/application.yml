@@ -18,26 +18,17 @@ spring:
       password: root
       username: root
 
-  cloud:
-    kubernetes:
-      discovery:
-        all-namespaces: true
+#  cloud:
+#    kubernetes:
+#      discovery:
+#        all-namespaces: true
 
-logging:
-  level:
-    root: warn
-    org:
-      springframework:
-        web: debug
-      hibernate:
-        SQL: info
-  file: /logs/goreit.log
 
 server:
-  port: 8082
+  port: 8080
 
-ribbon:
-  http:
-    client:
-      enabled: true
+#ribbon:
+#  http:
+#    client:
+#      enabled: true
 

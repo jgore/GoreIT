@@ -10,7 +10,6 @@ import pl.goreit.blog.domain.service.CategoryService;
 
 @RestController
 @RequestMapping("/category")
-@CrossOrigin("*")
 public class CategoryController {
 
     @Autowired

@@ -1,5 +1,7 @@
 package pl.goreit.blog.domain.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -16,7 +18,11 @@ public class Order {
 
     private List<OrderLine> orderLines;
 
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDateTime creationTime;
+
+    public Order() {
+    }
 
     public Order(String id, String userId, List<OrderLine> orderLines, LocalDateTime creationTime) {
         this.id = id;

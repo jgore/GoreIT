@@ -11,17 +11,18 @@ import pl.goreit.api.generated.CreateOrderRequest;
 import pl.goreit.api.generated.OrderResponse;
 import pl.goreit.blog.domain.DomainException;
 import pl.goreit.blog.domain.service.OrderService;
+import pl.goreit.blog.domain.service.impl.MqSenderService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
 @RequestMapping("orders")
-@CrossOrigin(origins = "*")
 public class OrderController {
 
     @Autowired
     private OrderService orderService;
+
 
     @GetMapping("/{id}")
     @ApiOperation(value = "get order by id")

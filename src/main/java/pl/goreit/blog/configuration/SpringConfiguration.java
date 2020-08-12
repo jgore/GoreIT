@@ -1,5 +1,6 @@
 package pl.goreit.blog.configuration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -18,6 +19,5 @@ public class SpringConfiguration {
         conversionService.setConverters(converters);
         return conversionService;
     }
-
 
 }

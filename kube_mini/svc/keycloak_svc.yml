@@ -6,6 +6,7 @@ metadata:
   name: keycloak
   labels:
     app: keycloak
+    name: keycloak
 spec:
   type: NodePort
   ports:
@@ -15,3 +16,4 @@ spec:
       nodePort: 30082
   selector:
     app: keycloak
+    name: keycloak

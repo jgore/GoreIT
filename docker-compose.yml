@@ -1,0 +1,66 @@
+version: '3.6'
+services:
+
+#  goreit-service:
+#    image: goreit/goreit
+#    volumes:
+#      - goreit-service-data:/root
+#    ports:
+#      - 8080:8080
+#    depends_on:
+#      - 'mongodb'
+#      - 'postgres'
+#    environment:
+#      SPRING_PROFILES_ACTIVE: "dev"
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_USERNAME: admin
+      RABBITMQ_PASSWORD: admin
+    volumes:
+      - goreit-rabbitmq-data:/data/mq
+    networks:
+      - goreit
+
+
+  mongodb:
+    image: mongo:4.0.0
+    volumes:
+      -  goreit-mongodb-data:/data/db
+    ports:
+      - 27017:27017
+    command: mongod
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    networks:
+      - goreit
+
+  postgres:
+    image: postgres
+    volumes:
+      - goreit-postgres-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=Lideo123^
+      - POSTGRES_DB=goreit
+      - PGDATA=postgres
+    networks:
+      - goreit
+
+networks:
+  goreit:
+
+volumes:
+  goreit-rabbitmq-data:
+  goreit-service-data:
+  goreit-mongodb-data:
+  goreit-postgres-data:
+
+
+

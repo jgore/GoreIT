@@ -50,21 +50,21 @@ spec:
               value: "5432"
             - name: POSTGRES_DATABASE
               value: "keycloak-db"
----
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: keycloak
-  labels:
-    app: keycloak
-    name: keycloak
-spec:
-  type: LoadBalancer
-  ports:
-    - port: 8080
-      targetPort: 8080
-      protocol: TCP
-  selector:
-    app: keycloak
-    name: keycloak
+#---
+#
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: keycloak
+#  labels:
+#    app: keycloak
+#    name: keycloak
+#spec:
+#  type: LoadBalancer
+#  ports:
+#    - port: 8080
+#      targetPort: 8080
+#      protocol: TCP
+#  selector:
+#    app: keycloak
+#    name: keycloak

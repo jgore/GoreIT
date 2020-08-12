@@ -1,7 +1,7 @@
 buildscript {
     ext {
         js2pVersion = '1.0.2'
-        springfoxVersion = '2.8.0'
+        springfoxVersion = '2.9.2'
     }
     repositories {
         jcenter()
@@ -10,7 +10,8 @@ buildscript {
         }
     }
     dependencies {
-        classpath("org.jsonschema2pojo:jsonschema2pojo-gradle-plugin:${js2pVersion}")
+        classpath("org.jsonschema2pojo:jsonsc" +
+                "hema2pojo-gradle-plugin:${js2pVersion}")
     }
 }
 
@@ -31,15 +32,26 @@ repositories {
 
 dependencies {
     implementation(
-            'org.springframework.cloud:spring-cloud-starter-kubernetes-all:1.1.2.RELEASE',
+//            'org.springframework.cloud:spring-cloud-starter-kubernetes-all:1.1.2.RELEASE',
             'org.springframework.boot:spring-boot-starter-data-mongodb',
             'org.springframework.boot:spring-boot-starter-web',
             'org.springframework.boot:spring-boot-starter-aop',
             'org.springframework.boot:spring-boot-starter-actuator',
             "io.springfox:springfox-swagger2:${springfoxVersion}",
             "io.springfox:springfox-swagger-ui:${springfoxVersion}",
-            
+            group: 'org.springframework.boot', name: 'spring-boot-starter-amqp',
     )
+
+    // https://mvnrepository.com/artifact/org.springframework.security/spring-security-web
+    compile group: 'org.springframework.security', name: 'spring-security-web', version: '5.3.3.RELEASE'
+// https://mvnrepository.com/artifact/org.springframework.security/spring-security-core
+    compile group: 'org.springframework.security', name: 'spring-security-core', version: '5.3.3.RELEASE'
+// https://mvnrepository.com/artifact/org.springframework.security/spring-security-config
+    compile group: 'org.springframework.security', name: 'spring-security-config', version: '5.3.3.RELEASE'
+// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.11.1'
+
+    compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.4")
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'

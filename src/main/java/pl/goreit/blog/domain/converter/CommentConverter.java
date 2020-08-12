@@ -1,4 +1,4 @@
-package pl.goreit.blog.api.converter;
+package pl.goreit.blog.domain.converter;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
