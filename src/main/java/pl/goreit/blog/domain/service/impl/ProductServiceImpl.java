@@ -26,10 +26,9 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepo productRepo;
 
 
-
     @Override
-    public List<ProductResponse> getAll() {
-        return productRepo.findAll().stream()
+    public List<ProductResponse> getAllByCategory(CategoryName categoryName) {
+        return productRepo.findByCategoryName(categoryName).stream()
                 .map(product -> sellConversionService.convert(product, ProductResponse.class))
                 .collect(Collectors.toList());
     }

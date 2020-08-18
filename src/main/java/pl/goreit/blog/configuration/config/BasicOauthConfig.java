@@ -37,13 +37,12 @@ public class BasicOauthConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/products/").permitAll()
                 .antMatchers("/products/**").permitAll()
                 .antMatchers("/message/**").permitAll()
+                .antMatchers("/category/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic()
                 .authenticationEntryPoint(authenticationEntryPoint);
 
-        http.addFilterAfter(new CustomFilter(),
-                BasicAuthenticationFilter.class);
     }
 
     @Bean

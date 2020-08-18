@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.goreit.api.generated.ProductResponse;
 import pl.goreit.api.generated.product_api.CreateProductRequest;
+import pl.goreit.blog.domain.CategoryName;
 import pl.goreit.blog.domain.DomainException;
 import pl.goreit.blog.domain.service.ProductService;
 
@@ -16,10 +17,10 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping
-    @ApiOperation(value = "pobiera wszystkie produkty", notes = "pobiera wszystkie produkty ")
-    public List<ProductResponse> getProducts() {
-        return productService.getAll();
+    @GetMapping("/byCategory/{category}")
+    @ApiOperation(value = "pobiera wszystkie produkty w katgori", notes = "pobiera wszystkie produkty w kategori")
+    public List<ProductResponse> getProductsByCategory(@PathVariable CategoryName category) {
+        return productService.getAllByCategory(category);
     }
 
     @GetMapping("/{title}")

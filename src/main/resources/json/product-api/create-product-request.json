@@ -3,7 +3,7 @@
   "properties": {
     "categoryName": {
       "enum": [
-        "MOTO","ELEKTRO", "IT"
+        "MOTORYZACJA","ELEKTRONIKA", "IT"
       ]
     },
     "title": {

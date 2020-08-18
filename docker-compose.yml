@@ -1,23 +1,29 @@
-version: '3.6'
+version: '3.7
+'
 services:
 
-#  goreit-service:
-#    image: goreit/goreit
-#    volumes:
-#      - goreit-service-data:/root
-#    ports:
-#      - 8080:8080
-#    depends_on:
-#      - 'mongodb'
-#      - 'postgres'
-#    environment:
-#      SPRING_PROFILES_ACTIVE: "dev"
+  #  goreit-service:
+  #    image: goreit/goreit
+  #    volumes:
+  #      - goreit-service-data:/root
+  #    ports:
+  #      - 8080:8080
+  #    depends_on:
+  #      - 'mongodb'
+  #      - 'postgres'
+  #    environment:
+  #      SPRING_PROFILES_ACTIVE: "dev"
 
   rabbitmq:
     image: rabbitmq:3-management
     ports:
       - "5672:5672"
       - "15672:15672"
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 2000M
     environment:
       RABBITMQ_USERNAME: admin
       RABBITMQ_PASSWORD: admin
@@ -30,28 +36,50 @@ services:
   mongodb:
     image: mongo:4.0.0
     volumes:
-      -  goreit-mongodb-data:/data/db
+      - goreit-mongodb-data:/data/db
     ports:
       - 27017:27017
     command: mongod
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 2000M
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
     networks:
       - goreit
 
-  postgres:
-    image: postgres
-    volumes:
-      - goreit-postgres-data:/var/lib/postgresql/data
+  solr:
+    image: solr:8
     ports:
-      - 5432:5432
-    environment:
-      - POSTGRES_PASSWORD=Lideo123^
-      - POSTGRES_DB=goreit
-      - PGDATA=postgres
+      - "8983:8983"
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 2000M
+    volumes:
+      - goreit-solr-data:/var/solr
+    command:
+      - solr-precreate
+      - goreit
     networks:
       - goreit
+
+#  postgres:
+#    image: postgres
+#    volumes:
+#      - goreit-postgres-data:/var/lib/postgresql/data
+#    ports:
+#      - 5432:5432
+#    environment:
+#      - POSTGRES_PASSWORD=Lideo123^
+#      - POSTGRES_DB=goreit
+#      - PGDATA=postgres
+#    networks:
+#      - goreit
 
 networks:
   goreit:
@@ -60,7 +88,8 @@ volumes:
   goreit-rabbitmq-data:
   goreit-service-data:
   goreit-mongodb-data:
-  goreit-postgres-data:
+  goreit-solr-data:
+#  goreit-postgres-data:
 
 
 
