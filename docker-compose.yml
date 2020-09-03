@@ -1,5 +1,5 @@
-version: '3.7
-'
+version: '3.7'
+
 services:
 
   #  goreit-service:
@@ -68,18 +68,18 @@ services:
     networks:
       - goreit
 
-#  postgres:
-#    image: postgres
-#    volumes:
-#      - goreit-postgres-data:/var/lib/postgresql/data
-#    ports:
-#      - 5432:5432
-#    environment:
-#      - POSTGRES_PASSWORD=Lideo123^
-#      - POSTGRES_DB=goreit
-#      - PGDATA=postgres
-#    networks:
-#      - goreit
+  postgres:
+    image: postgres
+    volumes:
+      - goreit-postgres-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=camunda
+      - PGDATA=postgres
+    networks:
+      - goreit
 
 networks:
   goreit:
@@ -89,7 +89,7 @@ volumes:
   goreit-service-data:
   goreit-mongodb-data:
   goreit-solr-data:
-#  goreit-postgres-data:
+  goreit-postgres-data:
 
 
 

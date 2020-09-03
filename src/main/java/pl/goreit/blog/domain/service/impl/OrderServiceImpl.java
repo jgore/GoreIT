@@ -8,11 +8,13 @@ import org.springframework.stereotype.Component;
 import pl.goreit.api.generated.CreateOrderRequest;
 import pl.goreit.api.generated.OrderLineRequest;
 import pl.goreit.api.generated.OrderResponse;
+import pl.goreit.blog.GoreIT;
 import pl.goreit.blog.domain.DomainException;
 import pl.goreit.blog.domain.ExceptionCode;
 import pl.goreit.blog.domain.model.Order;
 import pl.goreit.blog.domain.model.OrderLine;
 import pl.goreit.blog.domain.model.Product;
+import pl.goreit.blog.domain.mq.MqOrderService;
 import pl.goreit.blog.domain.service.OrderService;
 import pl.goreit.blog.infrastructure.mongo.OrderRepo;
 import pl.goreit.blog.infrastructure.mongo.ProductRepo;
@@ -34,7 +36,7 @@ public class OrderServiceImpl implements OrderService {
     private ProductRepo productRepo;
 
     @Autowired
-    private MqSenderService mqSenderService;
+    private MqOrderService mqOrderService;
 
     @Override
     public OrderResponse findById(String id) throws DomainException {
@@ -51,32 +53,22 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderResponse create(CreateOrderRequest orderRequest) throws DomainException {
-        ObjectId orderId = ObjectId.get();
+    public OrderResponse create(CreateOrderRequest createOrderRequest) throws DomainException {
 
-        List<OrderLineRequest> orderLineRequests = orderRequest.getOrderlines();
+        List<OrderLineRequest> orderLineRequests = createOrderRequest.getOrderlines();
 
         if (orderLineRequests == null || orderLineRequests.isEmpty()) {
             throw new DomainException(ExceptionCode.GOREIT_06);
         }
 
-        List<OrderLine> orderlines = orderLineRequests.stream()
-                .map(orderLineView -> {
-
-                    //@FIXME get all upper
-                    Product product = productRepo.findByTitle(orderLineView.getProductTitle()).get();
-                    return new OrderLine(orderId.toString(), product.getTitle(), orderLineView.getAmount(), product.getPrice());
-                })
-                .collect(Collectors.toList());
-
-        Order order = new Order(orderId.toString(), orderRequest.getUserId(), orderlines, LocalDateTime.now());
+        OrderResponse orderResponse = null;
 
         try {
-            mqSenderService.sendOrder(order);
+            orderResponse = mqOrderService.sendOrder(createOrderRequest);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
 
-        return sellConversionService.convert(orderRepo.save(order), OrderResponse.class);
+        return orderResponse;
     }
 }

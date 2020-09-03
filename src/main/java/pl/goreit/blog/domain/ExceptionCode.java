@@ -10,6 +10,7 @@ public enum ExceptionCode {
     GOREIT_06("GoreIT.06", "Order must contains orderlines");
 
 
+
     private final String message;
     private String code;
 

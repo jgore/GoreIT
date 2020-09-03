@@ -3,7 +3,7 @@
   "properties": {
     "categoryName": {
       "enum": [
-        "MOTORYZACJA","ELEKTRONIKA", "IT"
+        "MOTORYZACJA","ELEKTRONIKA", "IT", "USLUGI","DZIECKO"
       ]
     },
     "title": {

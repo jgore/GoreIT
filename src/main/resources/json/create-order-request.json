@@ -4,6 +4,14 @@
     "userId": {
       "type": "string"
     },
+    "isInvoice": {
+      "type": "boolean",
+      "default": false
+    },
+    "isSummarizedPdf": {
+      "type": "boolean",
+      "default": false
+    },
     "orderlines": {
       "type": "array",
       "items": {
