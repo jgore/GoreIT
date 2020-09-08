@@ -6,13 +6,18 @@ import io.swagger.annotations.AuthorizationScope;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import pl.goreit.api.generated.CreateOrderRequest;
 import pl.goreit.api.generated.OrderResponse;
 import pl.goreit.blog.domain.DomainException;
+import pl.goreit.blog.domain.model.Image;
+import pl.goreit.blog.domain.service.ImageService;
 import pl.goreit.blog.domain.service.OrderService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("orders")
@@ -20,6 +25,9 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private ImageService imageService;
 
 
     @GetMapping("/{id}")
@@ -29,7 +37,7 @@ public class OrderController {
     }
 
     @GetMapping("/byUser/{id}")
-    @ApiOperation(value="get by user id", authorizations=@Authorization(value="oauth2", scopes=@AuthorizationScope(description="write", scope="write")))
+    @ApiOperation(value = "get by user id", authorizations = @Authorization(value = "oauth2", scopes = @AuthorizationScope(description = "write", scope = "write")))
     public List<OrderResponse> getOrders(HttpServletRequest httpRequest, @PathVariable("id") String id) throws DomainException {
 
         return orderService.findByUserId(id);
@@ -41,4 +49,14 @@ public class OrderController {
     public OrderResponse addOrder(@RequestBody CreateOrderRequest orderRequest) throws DomainException {
         return orderService.create(orderRequest);
     }
+
+
+    @PostMapping(value = "/photo/add")
+    @ApiOperation(value = "add new photos")
+    public Image addImages(@RequestParam UUID transactionId,
+                           @RequestParam("photos[]") MultipartFile photo) throws DomainException, IOException {
+
+        return imageService.create(transactionId, photo.getBytes());
+    }
+
 }

@@ -4,11 +4,6 @@ mongodb:
       size: 300
 
 spring:
-  servlet:
-  multipart:
-    max-file-size: 3MB
-  application:
-    name: Goreit
   data:
     mongodb:
       database:  goreit
@@ -19,6 +14,14 @@ spring:
       username: root
     solr:
       host: http://127.0.0.1:8983/solr
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
+      max-request-size: 20MB
+    application:
+      name: Goreit
+
 
 #  cloud:
 #    kubernetes:
