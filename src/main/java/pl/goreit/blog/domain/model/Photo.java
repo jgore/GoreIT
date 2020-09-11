@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.UUID;
 
 @Document
-public class Image {
+public class Photo {
 
     @Id
     private String id;
@@ -16,7 +16,7 @@ public class Image {
     private UUID transactionId;
     private byte[] imageByte;
 
-    public Image( UUID transactionId, String userId,String name, String type, byte[] imageByte) {
+    public Photo(UUID transactionId, String userId, String name, String type, byte[] imageByte) {
         this.transactionId = transactionId;
         this.userId = userId;
         this.name = name;

@@ -7,8 +7,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.goreit.blog.domain.DomainException;
-import pl.goreit.blog.domain.model.Image;
-import pl.goreit.blog.domain.service.ImageService;
+import pl.goreit.blog.domain.model.Photo;
+import pl.goreit.blog.domain.service.PhotoService;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,25 +16,26 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/photos")
-public class ImageController {
+public class PhotoController {
 
     @Autowired
-    private ImageService imageService;
+    private PhotoService photoService;
 
     @PostMapping(value = "/add")
-    @ApiOperation(value = "add new photos")
-    public Image addImages(@RequestParam UUID transactionId,
-                           @RequestParam("photos[]") MultipartFile photo) throws DomainException, IOException {
+    @ApiOperation(value = "add new photo")
+    public Photo AddPhoto(@RequestParam UUID transactionId,
+                          @RequestParam String name,
+                          @RequestParam("photo") MultipartFile photo) throws DomainException, IOException {
 
-        return imageService.create(transactionId, photo.getBytes());
+        return photoService.create(transactionId, name, photo.getBytes());
     }
 
-    @GetMapping(value = "")
+    @GetMapping()
     @ApiOperation(value = "find all by userId")
-    public List<Image> getAllByUserId() {
+    public List<Photo> getAllByUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userId = authentication.getName();
-        return imageService.findByUser(userId);
+        return photoService.findByUser(userId);
     }
 
 }
