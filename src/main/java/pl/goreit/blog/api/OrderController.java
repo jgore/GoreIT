@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import pl.goreit.api.generated.CreateOrderRequest;
 import pl.goreit.api.generated.OrderResponse;
 import pl.goreit.blog.domain.DomainException;
-import pl.goreit.blog.domain.service.PhotoService;
 import pl.goreit.blog.domain.service.OrderService;
+import pl.goreit.blog.domain.service.PhotoAlbumService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -21,10 +21,6 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
-
-    @Autowired
-    private PhotoService photoService;
-
 
     @GetMapping("/{id}")
     @ApiOperation(value = "get order by id")
