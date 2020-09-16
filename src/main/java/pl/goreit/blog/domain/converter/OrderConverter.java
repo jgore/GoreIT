@@ -13,7 +13,7 @@ public class OrderConverter implements Converter<Order, OrderResponse> {
 
     @Override
     public OrderResponse convert(Order order) {
-        return new OrderResponse(order.getId(), order.getCreationTime().toString(),
+        return new OrderResponse(order.getId(), order.getSellerId(), order.getCreationTime().toString(),
                 order.getOrderLines().stream()
                         .map(orderProduct -> new OrderlineView(orderProduct.getProductTitle(), orderProduct.getAmount(), orderProduct.getPrice()))
                         .collect(Collectors.toList()));

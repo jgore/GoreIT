@@ -4,6 +4,9 @@
     "id": {
       "type": "string"
     },
+    "sellerId": {
+      "type": "string"
+    },
     "creationTime": {
       "type": "string"
     },
