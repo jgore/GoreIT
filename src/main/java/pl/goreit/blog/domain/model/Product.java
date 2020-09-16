@@ -17,6 +17,7 @@ public class Product {
 
     @Id
     private String id;
+    private String sellerId;
     private CategoryName categoryName;
     @Indexed(unique = true)
     private String title;
@@ -28,19 +29,20 @@ public class Product {
 
     private LocalDateTime creationDate;
 
-    public Product(CategoryName categoryName, String title, String text, BigDecimal price, Integer quantity) {
+    public Product(CategoryName categoryName, String sellerId, String title, String text, BigDecimal price, Integer quantity) {
         this.categoryName = categoryName;
+        this.sellerId = sellerId;
         this.title = title;
         this.text = text;
         this.price = price;
         this.quantity = quantity;
-        this.status = Status.AVAILABLE;
+        this.status = Status.ACTIVE;
         this.creationDate = LocalDateTime.now();
         this.comments = Lists.newArrayList();
     }
 
     public boolean addComment(Comment comment) throws DomainException {
-        if (Status.AVAILABLE != getStatus()) {
+        if (Status.ACTIVE != getStatus()) {
             throw new DomainException(ExceptionCode.GOREIT_03);
         }
         return comments.add(comment);
@@ -52,6 +54,10 @@ public class Product {
 
     public String getId() {
         return id;
+    }
+
+    public String getSellerId() {
+        return sellerId;
     }
 
     public BigDecimal getPrice() {
@@ -84,6 +90,6 @@ public class Product {
 
 
     public enum Status {
-        AVAILABLE, SOLD, ARCHIVED
+        ACTIVE, SOLD, INACTIVE
     }
 }

@@ -2,6 +2,8 @@ package pl.goreit.blog.domain.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import pl.goreit.api.generated.ProductResponse;
 import pl.goreit.api.generated.product_api.CreateProductRequest;
@@ -41,8 +43,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductResponse add(CreateProductRequest createProductRequest) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String sellerId = authentication.getName();
+
         CreateProductRequest.CategoryName categoryName = createProductRequest.getCategoryName();
-        Product product = new Product(CategoryName.valueOf(categoryName.value()), createProductRequest.getTitle(),
+        Product product = new Product(CategoryName.valueOf(categoryName.value()),
+                sellerId,
+                createProductRequest.getTitle(),
                 createProductRequest.getText(), createProductRequest.getPrice(), createProductRequest.getQuantity());
         productRepo.save(product);
         return sellConversionService.convert(product, ProductResponse.class);
