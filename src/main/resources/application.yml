@@ -40,4 +40,8 @@ server:
 pricing:
   commission: 0.02
   default:
-    balance: 0
+    balance: 100
+    coins: 500
+  coins:
+    multipler: 5
+    divider: 10

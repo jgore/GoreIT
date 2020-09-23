@@ -15,11 +15,14 @@ public class CreateAccountRequestToAccountConverter implements Converter<CreateA
     @Value("${pricing.default.balance}")
     private String defaultBalance;
 
+    @Value("${pricing.default.coins}")
+    private String defaultCoins;
+
     @Autowired
     private AddressViewToAddressConverter addressViewToAddressConverter;
 
     @Override
     public Account convert(CreateAccountRequest request) {
-        return new Account(request.getUserId(),request.getFirstName(),request.getLastName(), addressViewToAddressConverter.convert(request.getAddress()), new BigDecimal(defaultBalance) );
+        return new Account(request.getUserId(),request.getFirstName(),request.getLastName(), addressViewToAddressConverter.convert(request.getAddress()), new BigDecimal(defaultBalance), new BigDecimal(defaultCoins) );
     }
 }

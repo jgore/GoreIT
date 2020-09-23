@@ -4,6 +4,9 @@
     "id": {
       "type": "string"
     },
+    "userId": {
+      "type": "string"
+    },
     "sellerId": {
       "type": "string"
     },
@@ -20,6 +23,7 @@
   "definitions": {
     "orderlineView": {
       "type": "object",
+
       "properties": {
         "sellerId": {
           "type": "string"

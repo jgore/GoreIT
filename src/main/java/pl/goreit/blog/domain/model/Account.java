@@ -22,14 +22,17 @@ public class Account {
 
     private BigDecimal balance;
 
+    private BigDecimal coins;
+
     private LocalDateTime createdAt;
 
-    public Account(String userId, String firstName, String lastName, Address address, BigDecimal balance) {
+    public Account(String userId, String firstName, String lastName, Address address, BigDecimal balance, BigDecimal coins) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
-        this.balance = BigDecimal.valueOf(200);
+        this.balance = balance;
+        this.coins = coins;
         this.createdAt = LocalDateTime.now();
     }
 
@@ -39,6 +42,14 @@ public class Account {
 
     public void decreaseBalance(BigDecimal value) {
         this.balance = this.balance.subtract(value);
+    }
+
+    public void increaseCoins(BigDecimal value) {
+        this.coins = this.coins.add(value);
+    }
+
+    public BigDecimal getCoins() {
+        return coins;
     }
 
     public String getId() {

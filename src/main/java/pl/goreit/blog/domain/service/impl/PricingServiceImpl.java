@@ -18,6 +18,9 @@ public class PricingServiceImpl implements PricingService {
     @Value("${pricing.commission}")
     private String commission;
 
+    @Value("${pricing.coins.divider}")
+    private String divider;
+
     @Autowired
     private AccountService accountService;
 
@@ -41,6 +44,25 @@ public class PricingServiceImpl implements PricingService {
         }
 
         return true;
+
+    }
+
+    @Override
+    public void coinsSettlement(OrderResponse orderResponse) {
+        List<OrderlineView> orderlineViews = orderResponse.getOrderlineViews();
+
+        BigDecimal sumCoins = BigDecimal.valueOf(0);
+
+        for (OrderlineView orderlineView : orderlineViews) {
+            BigDecimal sumLine = orderlineView.getPrice().multiply(BigDecimal.valueOf(orderlineView.getAmount()));
+            BigDecimal coins = sumLine.divide(new BigDecimal(divider), BigDecimal.ROUND_DOWN);
+            sumCoins = sumCoins.add(coins);
+        }
+
+        Account user = accountService.findByUserId(orderResponse.getUserId());
+        user.increaseCoins(sumCoins);
+
+        accountService.save(user);
 
     }
 }

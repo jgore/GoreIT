@@ -65,6 +65,7 @@ public class OrderServiceImpl implements OrderService {
         try {
             orderResponse = mqOrderService.sendOrder(createOrderRequest);
             pricingService.commissionSettlement(orderResponse);
+            pricingService.coinsSettlement(orderResponse);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
