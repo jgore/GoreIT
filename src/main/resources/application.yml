@@ -37,3 +37,7 @@ server:
 #    client:
 #      enabled: true
 
+pricing:
+  commission: 0.02
+  default:
+    balance: 0

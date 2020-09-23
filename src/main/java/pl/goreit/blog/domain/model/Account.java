@@ -3,6 +3,7 @@ package pl.goreit.blog.domain.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Document
@@ -19,14 +20,25 @@ public class Account {
 
     private Address address;
 
+    private BigDecimal balance;
+
     private LocalDateTime createdAt;
 
-    public Account(String userId, String firstName, String lastName, Address address) {
+    public Account(String userId, String firstName, String lastName, Address address, BigDecimal balance) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
+        this.balance = BigDecimal.valueOf(200);
         this.createdAt = LocalDateTime.now();
+    }
+
+    public void increaseBalance(BigDecimal value) {
+        this.balance = this.balance.add(value);
+    }
+
+    public void decreaseBalance(BigDecimal value) {
+        this.balance = this.balance.subtract(value);
     }
 
     public String getId() {
@@ -47,6 +59,10 @@ public class Account {
 
     public Address getAddress() {
         return address;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
     }
 
     public LocalDateTime getCreatedAt() {

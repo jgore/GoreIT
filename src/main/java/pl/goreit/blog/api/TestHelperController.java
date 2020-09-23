@@ -48,7 +48,7 @@ public class TestHelperController {
             orderLineRequests.add(orderProductView);
         }
 
-        return orderService.create(new CreateOrderRequest(userId, true, true, orderLineRequests));
+        return orderService.create(new CreateOrderRequest(userId, "admin", true, true, orderLineRequests));
     }
 
 

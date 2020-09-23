@@ -21,6 +21,9 @@
     "orderlineView": {
       "type": "object",
       "properties": {
+        "sellerId": {
+          "type": "string"
+        },
         "productTitle": {
           "type": "string"
         },

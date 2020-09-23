@@ -1,25 +1,21 @@
 package pl.goreit.blog.domain.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Component;
 import pl.goreit.api.generated.CreateOrderRequest;
 import pl.goreit.api.generated.OrderLineRequest;
 import pl.goreit.api.generated.OrderResponse;
-import pl.goreit.blog.GoreIT;
 import pl.goreit.blog.domain.DomainException;
 import pl.goreit.blog.domain.ExceptionCode;
 import pl.goreit.blog.domain.model.Order;
-import pl.goreit.blog.domain.model.OrderLine;
-import pl.goreit.blog.domain.model.Product;
 import pl.goreit.blog.domain.mq.MqOrderService;
 import pl.goreit.blog.domain.service.OrderService;
 import pl.goreit.blog.infrastructure.mongo.OrderRepo;
 import pl.goreit.blog.infrastructure.mongo.ProductRepo;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,6 +33,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private MqOrderService mqOrderService;
+
+    @Autowired
+    private PricingServiceImpl pricingService;
 
     @Override
     public OrderResponse findById(String id) throws DomainException {
@@ -65,9 +64,11 @@ public class OrderServiceImpl implements OrderService {
 
         try {
             orderResponse = mqOrderService.sendOrder(createOrderRequest);
+            pricingService.commissionSettlement(orderResponse);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+
 
         return orderResponse;
     }

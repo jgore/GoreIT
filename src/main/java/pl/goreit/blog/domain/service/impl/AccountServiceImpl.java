@@ -28,4 +28,9 @@ public class AccountServiceImpl implements AccountService {
     public Account add(CreateAccountRequest request) {
         return accountRepo.save(Objects.requireNonNull(converter.convert(request)));
     }
+
+    @Override
+    public Account save(Account account) {
+       return this.accountRepo.save(account);
+    }
 }

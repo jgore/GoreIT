@@ -7,4 +7,6 @@ public interface AccountService {
     Account findByUserId(String userId);
 
     Account add(CreateAccountRequest request);
+
+    Account save(Account account);
 }
