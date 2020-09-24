@@ -5,6 +5,8 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import pl.goreit.api.generated.OrderResponse;
+import pl.goreit.api.generated.OrderlineView;
 import pl.goreit.api.generated.ProductResponse;
 import pl.goreit.api.generated.product_api.CreateProductRequest;
 import pl.goreit.blog.domain.CategoryName;
@@ -48,10 +50,12 @@ public class ProductServiceImpl implements ProductService {
         String sellerId = authentication.getName();
 
         CreateProductRequest.CategoryName categoryName = createProductRequest.getCategoryName();
+
+        //@FIXME allow add photo album to product
         Product product = new Product(CategoryName.valueOf(categoryName.value()),
                 sellerId,
                 createProductRequest.getTitle(),
-                createProductRequest.getText(), createProductRequest.getPrice(), createProductRequest.getQuantity());
+                createProductRequest.getText(), createProductRequest.getPrice(), createProductRequest.getQuantity(),null);
         productRepo.save(product);
         return sellConversionService.convert(product, ProductResponse.class);
     }
@@ -68,5 +72,20 @@ public class ProductServiceImpl implements ProductService {
         product.addComment(new Comment(sequenceNo + 1, userId, text));
         Product saved = productRepo.save(product);
         return sellConversionService.convert(saved, ProductResponse.class);
+    }
+
+    @Override
+    public void updateAfterOrdered(OrderResponse orderResponse) {
+        for (OrderlineView orderlineView : orderResponse.getOrderlineViews()) {
+            String productTitle = orderlineView.getProductTitle();
+            Integer amount = orderlineView.getAmount();
+            Product product = productRepo.findByTitle(productTitle).get();
+            product.updateInventoryState(amount);
+
+            product.updateBoughtBy(orderResponse.getUserId());
+
+            productRepo.save(product);
+        }
+
     }
 }

@@ -1,5 +1,6 @@
 package pl.goreit.blog.domain.service;
 
+import pl.goreit.api.generated.OrderResponse;
 import pl.goreit.api.generated.ProductResponse;
 import pl.goreit.api.generated.product_api.CreateProductRequest;
 import pl.goreit.blog.domain.CategoryName;
@@ -16,4 +17,6 @@ public interface ProductService {
     ProductResponse add(CreateProductRequest createProductRequest);
 
     ProductResponse addComment(String userId, String productTitle, String text) throws DomainException;
+
+    void updateAfterOrdered(OrderResponse orderResponse);
 }

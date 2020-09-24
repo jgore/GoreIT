@@ -13,10 +13,22 @@
     "price": {
       "type": "string"
     },
+    "quantity": {
+      "type": "string"
+    },
+    "photoAlbum": {
+      "$ref": "./photo-album/photo-album-model.json"
+    },
     "comments": {
       "type": "array",
       "items": {
         "$ref": "#/definitions/commentView"
+      }
+    },
+    "boughtByList": {
+      "type": "array",
+      "items": {
+        "type": "string"
       }
     },
     "status": {

@@ -26,6 +26,17 @@ public class BasicOauthConfig extends WebSecurityConfigurerAdapter {
                 .authorities("ROLE_USER")
                 .and()
                 .withUser("michal").password(passwordEncoder().encode("michal"))
+                .authorities("ROLE_USER")
+                .authorities("ROLE_USER")
+                .and()
+                .withUser("test1").password(passwordEncoder().encode("test1"))
+                .authorities("ROLE_USER")
+                .authorities("ROLE_USER")
+                .and()
+                .withUser("test2").password(passwordEncoder().encode("test2"))
+                .authorities("ROLE_USER")
+                .and()
+                .withUser("test3").password(passwordEncoder().encode("test3"))
                 .authorities("ROLE_USER");
     }
 

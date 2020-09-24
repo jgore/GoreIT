@@ -41,7 +41,7 @@ pricing:
   commission: 0.02
   default:
     balance: 100
-    coins: 500
+    coins: 200
   coins:
     multipler: 5
     divider: 10

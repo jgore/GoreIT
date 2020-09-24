@@ -6,6 +6,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import pl.goreit.api.generated.CommentView;
 import pl.goreit.api.generated.ProductResponse;
+import pl.goreit.api.generated.photo_album.PhotoAlbumModel;
 import pl.goreit.blog.domain.model.Product;
 
 import java.util.stream.Collectors;
@@ -23,10 +24,15 @@ public class ProductConverter implements Converter<Product, ProductResponse> {
 
     @Override
     public ProductResponse convert(Product product) {
-        return new ProductResponse(product.getSellerId(), product.getTitle(), product.getText(), product.getPrice().toString(),
+        return new ProductResponse(product.getSellerId(),
+                product.getTitle(), product.getText(),
+                product.getPrice().toString(),
+                String.valueOf(product.getQuantity()),
+                conversionService.convert(product.getPhotoAlbum(), PhotoAlbumModel.class),
                 product.getComments().stream()
                         .map(comment -> conversionService.convert(comment, CommentView.class))
                         .collect(Collectors.toList()),
+                product.getBoughtByList(),
                 product.getStatus().name());
     }
 }
