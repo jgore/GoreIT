@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: goreit-front-dep
+  name: gshop-front-dep
   labels:
-    app: goreit-front-service
+    app: gshop-front-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: goreit-front
+      app: gshop-front
   template:
     metadata:
       labels:
-        app: goreit-front
+        app: gshop-front
     spec:
       containers:
-        - name: goreit-front
-          image: goreit/goreit-front:latest
+        - name: gshop-front
+          image: goreit/gshop-front:latest
           imagePullPolicy: "Always"
           ports:
             - containerPort: 80
@@ -25,14 +25,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: goreit-front-svc
+  name: gshop-front-svc
   labels:
-    app: goreit-front
+    app: gshop-front
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
     - port: 80
       targetPort: 80
       protocol: TCP
   selector:
-    app: goreit-front
+    app: gshop-front

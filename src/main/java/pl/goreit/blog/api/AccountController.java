@@ -3,7 +3,7 @@ package pl.goreit.blog.api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pl.goreit.api.generated.ProductResponse;
+import pl.goreit.api.generated.ProductViewDetails;
 import pl.goreit.api.generated.account.CreateAccountRequest;
 import pl.goreit.api.generated.product_api.CreateProductRequest;
 import pl.goreit.blog.domain.DomainException;

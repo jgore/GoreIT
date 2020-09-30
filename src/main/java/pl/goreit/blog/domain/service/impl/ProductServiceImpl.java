@@ -7,7 +7,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import pl.goreit.api.generated.OrderResponse;
 import pl.goreit.api.generated.OrderlineView;
-import pl.goreit.api.generated.ProductResponse;
+import pl.goreit.api.generated.ProductViewDetails;
+import pl.goreit.api.generated.ProductView;
 import pl.goreit.api.generated.product_api.CreateProductRequest;
 import pl.goreit.blog.domain.CategoryName;
 import pl.goreit.blog.domain.DomainException;
@@ -31,20 +32,20 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public List<ProductResponse> getAllByCategory(CategoryName categoryName) {
+    public List<ProductView> getAllByCategory(CategoryName categoryName) {
         return productRepo.findByCategoryName(categoryName).stream()
-                .map(product -> sellConversionService.convert(product, ProductResponse.class))
+                .map(product -> sellConversionService.convert(product, ProductView.class))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public ProductResponse findByTitle(String title) throws DomainException {
+    public ProductViewDetails findByTitle(String title) throws DomainException {
         Product product = productRepo.findByTitle(title).orElseThrow(() -> new DomainException(ExceptionCode.GOREIT_01));
-        return sellConversionService.convert(product, ProductResponse.class);
+        return sellConversionService.convert(product, ProductViewDetails.class);
     }
 
     @Override
-    public ProductResponse add(CreateProductRequest createProductRequest) {
+    public ProductViewDetails add(CreateProductRequest createProductRequest) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String sellerId = authentication.getName();
@@ -57,11 +58,11 @@ public class ProductServiceImpl implements ProductService {
                 createProductRequest.getTitle(),
                 createProductRequest.getText(), createProductRequest.getPrice(), createProductRequest.getQuantity(),null);
         productRepo.save(product);
-        return sellConversionService.convert(product, ProductResponse.class);
+        return sellConversionService.convert(product, ProductViewDetails.class);
     }
 
     @Override
-    public ProductResponse addComment(String userId, String productTitle, String text) throws DomainException {
+    public ProductViewDetails addComment(String userId, String productTitle, String text) throws DomainException {
         Product product = productRepo.findByTitle(productTitle).orElseThrow(() -> new DomainException(ExceptionCode.GOREIT_01));
 
         Integer sequenceNo = 0;
@@ -71,7 +72,7 @@ public class ProductServiceImpl implements ProductService {
 
         product.addComment(new Comment(sequenceNo + 1, userId, text));
         Product saved = productRepo.save(product);
-        return sellConversionService.convert(saved, ProductResponse.class);
+        return sellConversionService.convert(saved, ProductViewDetails.class);
     }
 
     @Override

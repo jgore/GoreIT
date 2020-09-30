@@ -40,7 +40,7 @@ spec:
     spec:
       containers:
         - name: mongo
-          image: mongo
+          image: mongo:4.0.0
           ports:
             - containerPort: 27017
           volumeMounts:
@@ -52,21 +52,21 @@ spec:
             - name: MONGO_INITDB_ROOT_PASSWORD
               value: root
       volumes:
-      - name: mongo-pv-storage
-        persistentVolumeClaim:
-          claimName: mongo-pv-claim
-#---
-#apiVersion: v1
-#kind: Service
-#metadata:
-#  name: mongo
-#  labels:
-#    app: mongo
-#spec:
-#  type: LoadBalancer
-#  ports:
-#    - port: 27017
-#      targetPort: 27017
-#      protocol: TCP
-#  selector:
-#    app: mongo
+        - name: mongo-pv-storage
+          persistentVolumeClaim:
+            claimName: mongo-pv-claim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo
+  labels:
+    app: mongo
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 27017
+      targetPort: 27017
+      protocol: TCP
+  selector:
+    app: mongo

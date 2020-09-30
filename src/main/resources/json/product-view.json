@@ -16,13 +16,10 @@
     "quantity": {
       "type": "string"
     },
-    "photoAlbum": {
-      "$ref": "./photo-album/photo-album-model.json"
-    },
     "comments": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/commentView"
+        "$ref": "./comment-view.json"
       }
     },
     "boughtByList": {
